@@ -74,7 +74,7 @@
          <x>0</x>
          <y>0</y>
          <width>272</width>
-         <height>570</height>
+         <height>502</height>
         </rect>
        </property>
        <attribute name="label">
@@ -90,6 +90,34 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="imagesPage">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>272</width>
+         <height>502</height>
+        </rect>
+       </property>
+       <attribute name="label">
+        <string>Images</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QListWidget" name="imagesView"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="inspectorPage">
+       <attribute name="label">
+        <string>Inspector</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QWebInspector" name="webInspector" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -100,6 +128,12 @@
    <class>QWebView</class>
    <extends>QWidget</extends>
    <header>QtWebKit/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>QWebInspector</class>
+   <extends>QWidget</extends>
+   <header location="global">QWebInspector</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -1,10 +1,14 @@
 #include "MyBrowser.h"
 #include <QtWebKit>
 
-MyBrowser::MyBrowser(QWidget *parent) : QWidget(parent) {
+MyBrowser::MyBrowser(QWidget *parent) :
+		QWidget(parent) {
 	ui.setupUi(this);
 	ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+	ui.webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled,
+			true);
 	ui.homeButton->click();
+	ui.webInspector->setPage(ui.webView->page());
 }
 
 void MyBrowser::on_lineEdit_returnPressed() {
@@ -25,6 +29,7 @@ void MyBrowser::on_homeButton_clicked() {
 void MyBrowser::on_webView_loadFinished(bool ok) {
 	if (ok) {
 		ui.linksView->clear();
+		ui.imagesView->clear();
 		QUrl baseUrl = ui.webView->url();
 		QString noSlashEnding = baseUrl.toString();
 		if (noSlashEnding.endsWith("/")) {
@@ -32,15 +37,23 @@ void MyBrowser::on_webView_loadFinished(bool ok) {
 		} else {
 			ui.linksView->addItem(noSlashEnding);
 		}
-		QWebElementCollection ec = ui.webView->page()->mainFrame()->findAllElements("a");
+		QWebElementCollection ec =
+				ui.webView->page()->mainFrame()->findAllElements("a");
 		foreach (QWebElement e, ec) {
 			QString href = e.attribute("href");
 			QString absHref = baseUrl.resolved(QUrl(href)).toString();
-			if (absHref.endsWith("/")) {
-				absHref = absHref.left(absHref.size() - 1);
-			}
-			if (ui.linksView->findItems(absHref, Qt::MatchExactly).size() == 0) {
+			if (ui.linksView->findItems(noTrailingSlash(absHref),
+					Qt::MatchExactly).size() == 0) {
 				ui.linksView->addItem(absHref);
+			}
+		}
+		ec = ui.webView->page()->mainFrame()->findAllElements("img");
+		foreach (QWebElement e, ec) {
+			QString href = e.attribute("src");
+			QString absHref = baseUrl.resolved(QUrl(href)).toString();
+			if (ui.imagesView->findItems(noTrailingSlash(absHref),
+					Qt::MatchExactly).size() == 0) {
+				ui.imagesView->addItem(absHref);
 			}
 		}
 	}
@@ -48,9 +61,21 @@ void MyBrowser::on_webView_loadFinished(bool ok) {
 
 void MyBrowser::on_webView_loadStarted() {
 	ui.linksView->clear();
+	ui.imagesView->clear();
 }
 
 void MyBrowser::on_linksView_itemActivated(QListWidgetItem* item) {
 	ui.webView->load(QUrl(item->text()));
 }
 
+void MyBrowser::on_imagesView_itemActivated(QListWidgetItem* item) {
+	ui.webView->load(QUrl(item->text()));
+}
+
+QString MyBrowser::noTrailingSlash(const QString &url) {
+	if (url.endsWith("/")) {
+		return url.left(url.size() - 1);
+	} else {
+		return url;
+	}
+}
