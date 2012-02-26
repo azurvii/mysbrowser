@@ -23,7 +23,7 @@ void MyBrowser::on_webView_urlChanged(const QUrl &url) {
 }
 
 void MyBrowser::on_homeButton_clicked() {
-	ui.webView->load(QUrl("https://www.google.com"));
+	ui.webView->load(QUrl("https://www.google.com/ncr"));
 }
 
 void MyBrowser::on_webView_loadFinished(bool ok) {
