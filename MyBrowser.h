@@ -17,6 +17,7 @@ public slots:
 	void on_imagesView_itemActivated(QListWidgetItem *item);
 	void on_viewDBButton_clicked();
 	void on_savePageButton_clicked();
+	void on_crawlButton_clicked();
 
 private:
 	QString noTrailingSlash(const QString &url);
@@ -24,5 +25,6 @@ private:
 private:
 	Ui::MyBrowser ui;
 	DatabaseViewer *dbViewer;
+	int threadCount;
 };
 

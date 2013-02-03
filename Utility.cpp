@@ -36,9 +36,9 @@ Utility::~Utility() {
 	killDB();
 }
 
-void Utility::saveFrame(const QWebPage &page) {
+void Utility::savePage(const QWebPage &page) {
 	insertTable(pageTableName, page.mainFrame()->url().toString(),
-			page.mainFrame()->toHtml());
+			page.mainFrame()->toHtml().toUtf8());
 }
 
 void Utility::initDB() {
@@ -61,7 +61,7 @@ void Utility::initDB() {
 }
 
 void Utility::insertTable(const QString &tableName, const QString &url,
-		const QString &html) {
+		const QByteArray &html) {
 	QSqlQuery q(db);
 	q.prepare(QString("INSERT INTO \"%1\" "
 			"(\"url\", \"html\", \"timestamp\") "
@@ -122,4 +122,9 @@ QList<PageRecord> Utility::getPageList() {
 		}
 		return pageList;
 	}
+}
+
+void Utility::savePage(const QString &url, const QByteArray &data) {
+	insertTable(pageTableName, url, data);
+	log(tr("Saved page %1").arg(url));
 }

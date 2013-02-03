@@ -2,9 +2,11 @@
 #include <QtWebKit>
 #include "DatabaseViewer.h"
 #include "Utility.h"
+#include "Crawler.h"
 
 MyBrowser::MyBrowser(QWidget *parent) :
 		QWidget(parent) {
+	threadCount = 0;
 	ui.setupUi(this);
 	ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
 	ui.webView->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled,
@@ -77,10 +79,17 @@ void MyBrowser::on_imagesView_itemActivated(QListWidgetItem *item) {
 
 void MyBrowser::on_viewDBButton_clicked() {
 	dbViewer->show();
+	dbViewer->raise();
+	dbViewer->setFocus();
 }
 
 void MyBrowser::on_savePageButton_clicked() {
-	Utility::getInstance()->saveFrame(*ui.webView->page());
+	Utility::getInstance()->savePage(*ui.webView->page());
+}
+
+void MyBrowser::on_crawlButton_clicked() {
+	Crawler * c = new Crawler(ui.webView->url().toString());
+	c->start();
 }
 
 QString MyBrowser::noTrailingSlash(const QString &url) {

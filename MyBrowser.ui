@@ -69,6 +69,14 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="toolPage">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>185</width>
+         <height>453</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Tools</string>
        </attribute>
@@ -84,6 +92,13 @@
          <widget class="QPushButton" name="viewDBButton">
           <property name="text">
            <string>View DB</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="crawlButton">
+          <property name="text">
+           <string>Crawl</string>
           </property>
          </widget>
         </item>
@@ -107,7 +122,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>275</width>
+         <width>185</width>
          <height>453</height>
         </rect>
        </property>
@@ -129,7 +144,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>275</width>
+         <width>185</width>
          <height>453</height>
         </rect>
        </property>
@@ -147,7 +162,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>275</width>
+         <width>185</width>
          <height>453</height>
         </rect>
        </property>

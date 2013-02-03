@@ -25,11 +25,13 @@ public:
 	QList<PageRecord> getPageList();
 
 public slots:
-	void saveFrame(const QWebPage &frame);
+	void savePage(const QWebPage &frame);
 	void createTable(const QString &tableName,
 			const QHash<QString, QString> &tableScheme);
 	void insertTable(const QString &tableName, const QString &url,
-			const QString &html);
+			const QByteArray &html);
+	void savePage(const QString &url, const QByteArray &data);
+
 private:
 	void initDB();
 	void killDB();
