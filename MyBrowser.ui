@@ -33,7 +33,7 @@
      <item>
       <widget class="QToolButton" name="homeButton">
        <property name="text">
-        <string>G</string>
+        <string>H</string>
        </property>
       </widget>
      </item>
@@ -68,13 +68,47 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
+      <widget class="QWidget" name="toolPage">
+       <attribute name="label">
+        <string>Tools</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5">
+        <item>
+         <widget class="QPushButton" name="savePageButton">
+          <property name="text">
+           <string>Save page content</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="viewDBButton">
+          <property name="text">
+           <string>View DB</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="linksPage">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>272</width>
-         <height>502</height>
+         <width>275</width>
+         <height>453</height>
         </rect>
        </property>
        <attribute name="label">
@@ -95,8 +129,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>272</width>
-         <height>502</height>
+         <width>275</width>
+         <height>453</height>
         </rect>
        </property>
        <attribute name="label">
@@ -109,6 +143,14 @@
        </layout>
       </widget>
       <widget class="QWidget" name="inspectorPage">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>275</width>
+         <height>453</height>
+        </rect>
+       </property>
        <attribute name="label">
         <string>Inspector</string>
        </attribute>

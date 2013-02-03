@@ -1,5 +1,7 @@
 #include "MyBrowser.h"
 #include <QtWebKit>
+#include "DatabaseViewer.h"
+#include "Utility.h"
 
 MyBrowser::MyBrowser(QWidget *parent) :
 		QWidget(parent) {
@@ -9,6 +11,7 @@ MyBrowser::MyBrowser(QWidget *parent) :
 			true);
 	ui.homeButton->click();
 	ui.webInspector->setPage(ui.webView->page());
+	dbViewer = new DatabaseViewer(this);
 }
 
 void MyBrowser::on_lineEdit_returnPressed() {
@@ -64,12 +67,20 @@ void MyBrowser::on_webView_loadStarted() {
 	ui.imagesView->clear();
 }
 
-void MyBrowser::on_linksView_itemActivated(QListWidgetItem* item) {
+void MyBrowser::on_linksView_itemActivated(QListWidgetItem *item) {
 	ui.webView->load(QUrl(item->text()));
 }
 
-void MyBrowser::on_imagesView_itemActivated(QListWidgetItem* item) {
+void MyBrowser::on_imagesView_itemActivated(QListWidgetItem *item) {
 	ui.webView->load(QUrl(item->text()));
+}
+
+void MyBrowser::on_viewDBButton_clicked() {
+	dbViewer->show();
+}
+
+void MyBrowser::on_savePageButton_clicked() {
+	Utility::getInstance()->saveFrame(*ui.webView->page());
 }
 
 QString MyBrowser::noTrailingSlash(const QString &url) {
