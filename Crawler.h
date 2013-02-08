@@ -9,36 +9,30 @@
 #define CRAWLER_H_
 
 #include <QObject>
-#include <QThread>
 #include <QNetworkReply>
 #include "Utility.h"
 
-class Crawler: public QThread {
+class Crawler: public QObject {
 Q_OBJECT
 public:
 	Crawler(QObject *parent = 0);
 	Crawler(const QString &startUrl);
 	virtual ~Crawler();
+	void setStartUrl(const QString &url);
 
 public slots:
-	void crawl();
-	void setStartUrl(const QString &url);
-	void getReply(QNetworkReply *reply);
-
-signals:
-	void finished(bool successful);
-	void startCrawling(const QString &url);
-
-protected:
-	void run();
+	void start();
+	void getReply(QNetworkReply* reply);
+	bool isUpdateMode() const;
+	void setUpdateMode(bool updateMode);
 
 private:
 	void crawl(const QString &url);
-	QStringList parseForUrls(const QByteArray &data);
+	QStringList parseForUrls(const QByteArray &data, const QString &baseUrl);
 
 private:
 	QString startUrl;
-	QNetworkAccessManager *crawlman;
+	bool updateMode;
 };
 
 #endif /* CRAWLER_H_ */

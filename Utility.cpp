@@ -28,7 +28,7 @@ Utility * Utility::getInstance() {
 }
 
 Utility::Utility(QObject *parent) :
-		QObject(parent) {
+		QObject(parent), logBrowser(0) {
 	initDB();
 }
 
@@ -99,7 +99,11 @@ void Utility::killDB() {
 }
 
 void Utility::log(const QString &message) {
-	qDebug() << message;
+	if (logBrowser) {
+		logBrowser->append(message);
+	} else {
+		qDebug() << message;
+	}
 }
 
 void Utility::logLastSqlError() {
@@ -128,3 +132,30 @@ void Utility::savePage(const QString &url, const QByteArray &data) {
 	insertTable(pageTableName, url, data);
 	log(tr("Saved page %1").arg(url));
 }
+
+QNetworkAccessManager *Utility::getCrawlman() {
+	return &crawlman;
+}
+
+bool Utility::hasUrl(const QString &url) {
+	QSqlQuery q(db);
+	q.prepare(QString("SELECT * FROM %1 WHERE url=:url").arg(pageTableName));
+	q.bindValue(":url", url);
+	if (!q.exec()) {
+		logLastSqlError();
+		return false;
+	} else {
+		bool a = q.next();
+		log(QString::number(a));
+		return a;
+	}
+}
+
+void Utility::setLogBrowser(QTextBrowser* logBrowser) {
+	this->logBrowser = logBrowser;
+}
+
+QTextBrowser* Utility::getLogBrowser() const {
+	return logBrowser;
+}
+

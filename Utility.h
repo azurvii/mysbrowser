@@ -13,7 +13,10 @@
 #include <QList>
 #include <QSqlDatabase>
 #include <QHash>
+#include <QNetworkAccessManager>
 #include "PageRecord.h"
+
+class QTextBrowser;
 
 class Utility: public QObject {
 Q_OBJECT
@@ -21,16 +24,20 @@ public:
 	static Utility *getInstance();
 	Utility(QObject *parent = 0);
 	virtual ~Utility();
-	static void log(const QString &message);
+	void log(const QString &message);
 	QList<PageRecord> getPageList();
+	QNetworkAccessManager *getCrawlman();
+	bool hasUrl(const QString &url);
 
-public slots:
+public:
 	void savePage(const QWebPage &frame);
 	void createTable(const QString &tableName,
 			const QHash<QString, QString> &tableScheme);
 	void insertTable(const QString &tableName, const QString &url,
 			const QByteArray &html);
 	void savePage(const QString &url, const QByteArray &data);
+	void setLogBrowser(QTextBrowser *logBrowser);
+	QTextBrowser *getLogBrowser() const;
 
 private:
 	void initDB();
@@ -42,6 +49,8 @@ private:
 	static QString dbLocation;
 	static const QString pageTableName;
 	QSqlDatabase db;
+	QNetworkAccessManager crawlman;
+	QTextBrowser *logBrowser;
 };
 
 #endif /* UTILITY_H_ */

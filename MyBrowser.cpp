@@ -5,7 +5,7 @@
 #include "Crawler.h"
 
 MyBrowser::MyBrowser(QWidget *parent) :
-		QWidget(parent) {
+		QWidget(parent), updateMode(false) {
 	threadCount = 0;
 	ui.setupUi(this);
 	ui.webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
@@ -14,17 +14,18 @@ MyBrowser::MyBrowser(QWidget *parent) :
 	ui.homeButton->click();
 	ui.webInspector->setPage(ui.webView->page());
 	dbViewer = new DatabaseViewer(this);
+	Utility::getInstance()->setLogBrowser(ui.logBrowser);
 }
 
-void MyBrowser::on_lineEdit_returnPressed() {
-	if (!ui.lineEdit->text().contains("://")) {
-		ui.lineEdit->setText("http://" + ui.lineEdit->text());
+void MyBrowser::on_urlEdit_returnPressed() {
+	if (!ui.urlEdit->text().contains("://")) {
+		ui.urlEdit->setText("http://" + ui.urlEdit->text());
 	}
-	ui.webView->load(QUrl(ui.lineEdit->text()));
+	ui.webView->load(QUrl(ui.urlEdit->text()));
 }
 
 void MyBrowser::on_webView_urlChanged(const QUrl &url) {
-	ui.lineEdit->setText(url.toString());
+	ui.urlEdit->setText(url.toString());
 }
 
 void MyBrowser::on_homeButton_clicked() {
@@ -88,8 +89,10 @@ void MyBrowser::on_savePageButton_clicked() {
 }
 
 void MyBrowser::on_crawlButton_clicked() {
-	Crawler * c = new Crawler(ui.webView->url().toString());
-	c->start();
+	if (!crawler) {
+		crawler = new Crawler(ui.webView->url().toString());
+	}
+	crawler->start();
 }
 
 QString MyBrowser::noTrailingSlash(const QString &url) {
@@ -97,5 +100,24 @@ QString MyBrowser::noTrailingSlash(const QString &url) {
 		return url.left(url.size() - 1);
 	} else {
 		return url;
+	}
+}
+
+void MyBrowser::on_testButton_clicked() {
+	log(Utility::getInstance()->hasUrl(ui.urlEdit->text()));
+}
+
+void MyBrowser::on_updateModeCheck_toggled(bool updateMode) {
+	setUpdateMode(updateMode);
+}
+
+bool MyBrowser::isUpdateMode() const {
+	return updateMode;
+}
+
+void MyBrowser::setUpdateMode(bool updateMode) {
+	this->updateMode = updateMode;
+	if (crawler) {
+		crawler->setUpdateMode(updateMode);
 	}
 }

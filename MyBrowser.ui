@@ -38,7 +38,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="urlEdit"/>
      </item>
      <item>
       <widget class="QProgressBar" name="progressBar">
@@ -84,7 +84,7 @@
         <item>
          <widget class="QPushButton" name="savePageButton">
           <property name="text">
-           <string>Save page content</string>
+           <string>Save page</string>
           </property>
          </widget>
         </item>
@@ -101,6 +101,23 @@
            <string>Crawl</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="testButton">
+          <property name="text">
+           <string>Test URL</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="updateModeCheck">
+          <property name="text">
+           <string>Update mode</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="logBrowser"/>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -194,7 +211,7 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>urlEdit</tabstop>
   <tabstop>webView</tabstop>
   <tabstop>backButton</tabstop>
   <tabstop>forwardButton</tabstop>
@@ -213,8 +230,8 @@
      <y>166</y>
     </hint>
     <hint type="destinationlabel">
-     <x>107</x>
-     <y>644</y>
+     <x>1078</x>
+     <y>34</y>
     </hint>
    </hints>
   </connection>
