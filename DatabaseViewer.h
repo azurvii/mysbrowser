@@ -8,7 +8,7 @@
 #ifndef DATABASEVIEWER_H_
 #define DATABASEVIEWER_H_
 
-#include "ui_DatabaseViewer.h"
+#include "build/ui_DatabaseViewer.h"
 #include <QList>
 #include <QWebPage>
 #include "PageRecord.h"

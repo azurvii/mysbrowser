@@ -73,7 +73,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>185</width>
+         <width>275</width>
          <height>453</height>
         </rect>
        </property>
@@ -117,7 +117,16 @@
          </widget>
         </item>
         <item>
-         <widget class="QTextBrowser" name="logBrowser"/>
+         <widget class="QTextBrowser" name="logBrowser">
+          <property name="font">
+           <font>
+            <family>Courier New</family>
+           </font>
+          </property>
+          <property name="lineWrapMode">
+           <enum>QTextEdit::NoWrap</enum>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -139,7 +148,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>185</width>
+         <width>275</width>
          <height>453</height>
         </rect>
        </property>
@@ -161,7 +170,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>185</width>
+         <width>275</width>
          <height>453</height>
         </rect>
        </property>
@@ -179,7 +188,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>185</width>
+         <width>275</width>
          <height>453</height>
         </rect>
        </property>

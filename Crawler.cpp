@@ -10,6 +10,7 @@
 #include <QWebPage>
 #include <QWebElementCollection>
 #include <QWebElement>
+#include <QApplication>
 
 Crawler::Crawler(QObject *parent) :
 		QObject(parent), updateMode(false) {
@@ -44,17 +45,19 @@ void Crawler::setStartUrl(const QString &url) {
 
 void Crawler::getReply(QNetworkReply* reply) {
 	QByteArray data = reply->readAll();
-	Utility::getInstance()->savePage(reply->url().toString(), data);
+	if (updateMode
+			|| !Utility::getInstance()->hasUrl(reply->url().toString())) {
+	} else {
+		Utility::getInstance()->savePage(reply->url().toString(), data);
+	}
 	reply->deleteLater();
 	foreach(QString url, parseForUrls(data, reply->url().toString())) {
 		crawl(url);
 	}
+	QApplication::processEvents();
 }
 
 void Crawler::crawl(const QString& url) {
-	if (!updateMode && Utility::getInstance()->hasUrl(url)) {
-		return;
-	}
 	Utility::getInstance()->getCrawlman()->get(QNetworkRequest(url));
 	connect(Utility::getInstance()->getCrawlman(),
 			SIGNAL(finished(QNetworkReply *)),

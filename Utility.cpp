@@ -28,7 +28,7 @@ Utility * Utility::getInstance() {
 }
 
 Utility::Utility(QObject *parent) :
-		QObject(parent), logBrowser(0) {
+		QObject(parent) {
 	initDB();
 }
 
@@ -99,11 +99,7 @@ void Utility::killDB() {
 }
 
 void Utility::log(const QString &message) {
-	if (logBrowser) {
-		logBrowser->append(message);
-	} else {
-		qDebug() << message;
-	}
+	qDebug() << message;
 }
 
 void Utility::logLastSqlError() {
@@ -149,13 +145,5 @@ bool Utility::hasUrl(const QString &url) {
 		log(QString::number(a));
 		return a;
 	}
-}
-
-void Utility::setLogBrowser(QTextBrowser* logBrowser) {
-	this->logBrowser = logBrowser;
-}
-
-QTextBrowser* Utility::getLogBrowser() const {
-	return logBrowser;
 }
 

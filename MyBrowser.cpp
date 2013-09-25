@@ -14,12 +14,14 @@ MyBrowser::MyBrowser(QWidget *parent) :
 	ui.homeButton->click();
 	ui.webInspector->setPage(ui.webView->page());
 	dbViewer = new DatabaseViewer(this);
-	Utility::getInstance()->setLogBrowser(ui.logBrowser);
 }
 
 void MyBrowser::on_urlEdit_returnPressed() {
-	if (!ui.urlEdit->text().contains("://")) {
-		ui.urlEdit->setText("http://" + ui.urlEdit->text());
+	QString url = ui.urlEdit->text();
+	if (url.startsWith("/")) {
+		ui.urlEdit->setText("file://" + url);
+	} else if (!url.contains("://")) {
+		ui.urlEdit->setText("http://" + url);
 	}
 	ui.webView->load(QUrl(ui.urlEdit->text()));
 }
@@ -29,7 +31,7 @@ void MyBrowser::on_webView_urlChanged(const QUrl &url) {
 }
 
 void MyBrowser::on_homeButton_clicked() {
-	ui.webView->load(QUrl("https://www.google.com/ncr"));
+	ui.webView->load(QUrl("https://www.startpage.com"));
 }
 
 void MyBrowser::on_webView_loadFinished(bool ok) {

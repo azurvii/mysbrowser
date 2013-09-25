@@ -36,8 +36,6 @@ public:
 	void insertTable(const QString &tableName, const QString &url,
 			const QByteArray &html);
 	void savePage(const QString &url, const QByteArray &data);
-	void setLogBrowser(QTextBrowser *logBrowser);
-	QTextBrowser *getLogBrowser() const;
 
 private:
 	void initDB();
@@ -50,7 +48,6 @@ private:
 	static const QString pageTableName;
 	QSqlDatabase db;
 	QNetworkAccessManager crawlman;
-	QTextBrowser *logBrowser;
 };
 
 #endif /* UTILITY_H_ */
