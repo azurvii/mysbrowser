@@ -1,0 +1,1 @@
+A simple browser based on QWebView with some add-ins
